@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        "@assets": ["./assets"],
+        "@assets/*": ["./assets/*"],
+        "@routes": ["./routes"],
+        "@routes/*": ["./routes/*"],
+        "@components": ["./library/components"],
+        "@components/*": ["./library/components/*"],
+        "@utilities": ["./library/utilities"],
+        "@utilities/*": ["./library/utilities/*"],
+        "@api": ["./api"],
+        "@api/*": ["./api/*"],
+        "@modules": ["./modules"],
+        "@modules/*": ["./modules/*"]
+      }
+    }
+  }
