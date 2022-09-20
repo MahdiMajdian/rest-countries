@@ -2,14 +2,16 @@
     "compilerOptions": {
       "baseUrl": "./src",
       "paths": {
+        "@utilities": ["./library/utilities"],
+        "@utilities/*": ["./library/utilities/*"],
         "@assets": ["./assets"],
         "@assets/*": ["./assets/*"],
+        "@styles": ["./styles"],
+        "@styles/*": ["./styles/*"],
         "@routes": ["./routes"],
         "@routes/*": ["./routes/*"],
         "@components": ["./library/components"],
         "@components/*": ["./library/components/*"],
-        "@utilities": ["./library/utilities"],
-        "@utilities/*": ["./library/utilities/*"],
         "@api": ["./api"],
         "@api/*": ["./api/*"],
         "@modules": ["./modules"],
