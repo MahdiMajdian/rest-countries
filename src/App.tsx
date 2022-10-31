@@ -1,17 +1,21 @@
-import { useEffect } from 'react';
+import { ThemeProvider } from '@emotion/react';
 
+import useDarkMode from '@hooks/useDarkMode';
 import Routes from '@routes';
-import { theme } from '@styles/theme';
+import GlobalStyles from '@styles/GlobalStyles';
+import { DarkModeContext } from '@utilities';
 
 function App() {
-  useEffect(() => {
-    document.body.setAttribute(
-      'style',
-      `background: ${theme.background.default};`
-    );
-  }, []);
+  const darkModeOptions = useDarkMode();
 
-  return <Routes />;
+  return (
+    <DarkModeContext.Provider value={darkModeOptions}>
+      <ThemeProvider theme={darkModeOptions.theme}>
+        <GlobalStyles />
+        <Routes />
+      </ThemeProvider>
+    </DarkModeContext.Provider>
+  );
 }
 
 export default App;

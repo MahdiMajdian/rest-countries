@@ -1,26 +1,35 @@
 import styled from '@emotion/styled';
 
-import { theme } from '@styles/theme';
+export const Header = styled.span``;
 
-export const Header = styled.div`
+export const Text = styled.span``;
+
+export const ToggleDarkMode = styled.button`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  color: ${({ theme }) => theme.palette.primary};
+  font-weight: 600;
+  background: none;
+  gap: 6px;
+
+  svg {
+    width: 12px;
+    height: 12px;
+    fill: ${({ theme }) => theme.palette.primary};
+  }
+`;
+
+export const NavBar = styled.div`
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 80px;
   font-weight: bold;
-  background-color: ${theme.background.element};
-  box-shadow: ${theme.shadow.main};
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
   padding-inline: 16px;
-`;
-
-export const Flag = styled.img`
-  width: 100%;
-  height: auto;
-  max-height: 200px;
-`;
-
-export const Title = styled.p`
-  font-weight: bold;
-  margin-block-end: 24px;
 `;
 
 export const Item = styled.div`
@@ -34,12 +43,22 @@ export const Value = styled.span`
   font-size: 12px;
 `;
 
+export const Title = styled.p`
+  font-weight: bold;
+  margin-block-end: 24px;
+`;
+
 export const Information = styled.div`
   width: 100%;
-
   padding-block-start: 24px;
   padding-block-end: 32px;
   padding-inline: 24px;
+`;
+
+export const Flag = styled.img`
+  width: 100%;
+  height: auto;
+  max-height: 200px;
 `;
 
 export const Card = styled.li`
@@ -48,8 +67,8 @@ export const Card = styled.li`
   border-radius: 4px;
   overflow: hidden;
   list-style: none;
-  background-color: ${theme.background.element};
-  box-shadow: ${theme.shadow.main};
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
 `;
 
 export const CountryList = styled.ul`
@@ -61,6 +80,6 @@ export const CountryList = styled.ul`
 `;
 
 export const StyledCountries = styled.div`
-  background-color: ${theme.background.default};
-  color: ${theme.palette.primary};
+  color: ${({ theme }) => theme.palette.primary};
+  background-color: ${({ theme }) => theme.background.default};
 `;
