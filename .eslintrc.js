@@ -80,6 +80,8 @@ module.exports = {
             ['@api/*', './src/api/*'],
             ['@modules', './src/modules'],
             ['@modules/*', './src/modules/*'],
+            ['@hooks', './src/library/hooks'],
+            ['@hooks/*', './src/library/hooks/*'],
           ],
           extensions: ['.ts', '.tsx', '.js'],
         },

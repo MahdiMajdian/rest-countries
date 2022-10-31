@@ -1,14 +1,32 @@
 import styled from '@emotion/styled';
 
-import { theme } from '@styles/theme';
+export const Text = styled.span``;
+
+export const ToggleDarkMode = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  font-weight: 600;
+  background: none;
+  gap: 6px;
+  color: ${({ theme }) => theme.palette.primary};
+
+  svg {
+    width: 12px;
+    height: 12px;
+    fill: ${({ theme }) => theme.palette.primary};
+  }
+`;
 
 export const Header = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 80px;
   font-weight: bold;
-  background-color: ${theme.background.element};
-  box-shadow: ${theme.shadow.main};
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
   padding-inline: 16px;
 `;
 
@@ -48,8 +66,8 @@ export const Card = styled.li`
   border-radius: 4px;
   overflow: hidden;
   list-style: none;
-  background-color: ${theme.background.element};
-  box-shadow: ${theme.shadow.main};
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
 `;
 
 export const CountryList = styled.ul`
@@ -61,6 +79,6 @@ export const CountryList = styled.ul`
 `;
 
 export const StyledCountries = styled.div`
-  background-color: ${theme.background.default};
-  color: ${theme.palette.primary};
+  background-color: ${({ theme }) => theme.background.default};
+  color: ${({ theme }) => theme.palette.primary};
 `;

@@ -1,6 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 
 import { observer } from 'mobx-react';
+
+import { Moon, MoonFill } from '@assets/images';
+import { DarkModeContext } from '@utilities';
 
 import {
   CountryList,
@@ -12,11 +15,17 @@ import {
   Title,
   Item,
   Value,
+  ToggleDarkMode,
 } from './styles';
 import { StoreContext } from './utilities';
 
 function Countries(): React.ReactElement {
   const store = useContext(StoreContext);
+  const { toggleTheme, isDarkMode } = useContext(DarkModeContext);
+
+  const handleDarkMode = useCallback(() => {
+    toggleTheme();
+  }, []);
 
   useEffect(() => {
     store.getCountries();
@@ -24,7 +33,22 @@ function Countries(): React.ReactElement {
 
   return (
     <StyledCountries>
-      <Header>Where in the world?</Header>
+      <Header>
+        <span>Where in the world?</span>
+        <ToggleDarkMode onClick={handleDarkMode}>
+          {isDarkMode ? (
+            <>
+              <MoonFill />
+              <span>Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon />
+              <span>Dark Mode</span>
+            </>
+          )}
+        </ToggleDarkMode>
+      </Header>
       <CountryList>
         {store.countries === undefined
           ? 'Loading...'
