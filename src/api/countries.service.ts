@@ -84,7 +84,29 @@ class HTTPServiceImpl implements HTTPService {
 
       return countries;
     } catch (error) {
-      // handle error here
+      // TODO: handle error here
+    }
+  }
+
+  public async searchForCountries(query: string) {
+    try {
+      const response = await fetch(`${this.BASE_URL}/v2/name/${query}`);
+
+      if (!response.ok) {
+        throw new Error('Connection failed with fetching data');
+      }
+
+      const data: ServerCountry[] = await response.json();
+
+      if (data === undefined) {
+        throw new Error('received data is corrupted');
+      }
+
+      const searchedCountries = this.transformCountries(data);
+
+      return searchedCountries;
+    } catch (error) {
+      // TODO: handle error here
     }
   }
 

@@ -10,14 +10,18 @@ let store: Store;
 
 class Store {
   public countries: Nullable<Country[]>;
+  public searchedCountries: Nullable<Country[]>;
 
   public constructor(private service: HTTPService) {
     makeObservable(this, {
       countries: observable,
       getCountries: action.bound,
+      searchedCountries: observable,
+      searchForCountries: action.bound,
     });
 
     this.countries = undefined;
+    this.searchedCountries = undefined;
   }
 
   public async getCountries(): Promise<void> {
@@ -29,6 +33,20 @@ class Store {
 
     runInAction(() => {
       this.countries = countries;
+    });
+  }
+
+  public async searchForCountries(countryName: string): Promise<void> {
+    if (this.searchedCountries !== undefined) {
+      this.searchedCountries = undefined;
+    }
+
+    const searchedCountries = await this.service.searchForCountries(
+      countryName
+    );
+
+    runInAction(() => {
+      this.searchedCountries = searchedCountries;
     });
   }
 }
