@@ -1,35 +1,5 @@
 import styled from '@emotion/styled';
-
-export const Header = styled.span``;
-
-export const Text = styled.span``;
-
-export const ToggleDarkMode = styled.button`
-  display: flex;
-  align-items: center;
-  border: none;
-  color: ${({ theme }) => theme.palette.primary};
-  font-weight: ${({ theme }) => theme.fontWeight.light};
-  background: none;
-  gap: 6px;
-
-  svg {
-    width: 12px;
-    height: 12px;
-    fill: ${({ theme }) => theme.palette.primary};
-  }
-`;
-
-export const NavBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 80px;
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  background-color: ${({ theme }) => theme.background.element};
-  box-shadow: ${({ theme }) => theme.shadow.main};
-  padding-inline: 16px;
-`;
+import { Link as OriginalLink } from 'react-router-dom';
 
 export const SearchIcon = styled.div`
   display: flex;
@@ -142,6 +112,11 @@ export const Card = styled.li`
   list-style: none;
   background-color: ${({ theme }) => theme.background.element};
   box-shadow: ${({ theme }) => theme.shadow.main};
+`;
+
+export const Link = styled(OriginalLink)`
+  text-decoration: none;
+  color: inherit;
 `;
 
 export const CountryList = styled.ul`
