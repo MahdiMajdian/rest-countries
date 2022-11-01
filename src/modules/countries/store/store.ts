@@ -4,24 +4,28 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { Nullable } from '@utilities';
 
-import { Country, HTTPService } from './types';
+import { Country, CountryDetails, HTTPService } from './types';
 
 let store: Store;
 
 class Store {
   public countries: Nullable<Country[]>;
   public searchedCountries: Nullable<Country[]>;
+  public selectedCountryDetails: Nullable<CountryDetails>;
 
   public constructor(private service: HTTPService) {
     makeObservable(this, {
       countries: observable,
       getCountries: action.bound,
+      selectedCountryDetails: observable,
+      getCountryDetails: action.bound,
       searchedCountries: observable,
       searchForCountries: action.bound,
       clearSearchedCountries: action.bound,
     });
 
     this.countries = undefined;
+    this.selectedCountryDetails = undefined;
     this.searchedCountries = undefined;
   }
 
@@ -53,6 +57,17 @@ class Store {
 
   public clearSearchedCountries() {
     this.searchedCountries = undefined;
+  }
+
+  public async getCountryDetails(countryCode: string) {
+    if (this.selectedCountryDetails !== undefined) {
+      this.selectedCountryDetails = undefined;
+    }
+
+    const countryDetails = await this.service.getCountryDetails(countryCode);
+    runInAction(() => {
+      this.selectedCountryDetails = countryDetails;
+    });
   }
 }
 
