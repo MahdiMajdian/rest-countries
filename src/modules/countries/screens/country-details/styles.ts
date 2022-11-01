@@ -21,9 +21,21 @@ export const BackButton = styled.button`
   }
 `;
 
-export const Flag = styled.img`
-  max-height: 250px;
-  margin-block: 24px;
+export const Flag = styled.div`
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    margin-block: 24px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    width: 100%;
+
+    img {
+      max-height: unset;
+    }
+  }
 `;
 
 export const Name = styled.p`
@@ -45,6 +57,11 @@ export const GroupTitle = styled.p`
   font-weight: ${({ theme }) => theme.fontWeight.normal};
   font-size: 18px;
   margin-block-end: 16px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    font-size: 16px;
+    white-space: nowrap;
+  }
 `;
 
 export const CountryName = styled.p`
@@ -74,14 +91,53 @@ export const BorderCountryList = styled.ul`
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   list-style: none;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+`;
+
+export const BorderCountries = styled.div`
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    display: flex;
+    gap: 16px;
+  }
 `;
 
 export const Group = styled.div`
   margin-block-end: 32px;
 `;
 
+export const Statics = styled.div`
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+export const Information = styled.div`
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    width: 100%;
+  }
+`;
+
+export const DetailsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    flex-direction: row;
+    gap: 96px;
+  }
+`;
+
 export const StyledCountryDetails = styled.div`
   display: flex;
   flex-direction: column;
   padding-inline: 24px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    padding-inline: 96px;
+  }
 `;

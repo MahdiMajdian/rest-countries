@@ -32,6 +32,11 @@ export const SearchBar = styled.div`
   box-shadow: ${({ theme }) => theme.shadow.main};
   margin-block: 24px;
   margin-inline: 16px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    flex-grow: 0.2;
+    margin: 0;
+  }
 `;
 
 export const Option = styled.option``;
@@ -58,6 +63,7 @@ export const Icon = styled.div`
   bottom: 0;
   align-items: center;
   padding-inline-end: 16px;
+  pointer-events: none;
 
   svg {
     width: 24px;
@@ -73,6 +79,23 @@ export const FilterByRegion = styled.div`
   height: 48px;
   margin-block: 16px;
   margin-inline: 16px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    width: 15%;
+    margin: 0;
+  }
+`;
+
+export const MenuBar = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-block-start: 48px;
+  }
 `;
 
 export const Item = styled.div`
@@ -112,6 +135,10 @@ export const Card = styled.li`
   list-style: none;
   background-color: ${({ theme }) => theme.background.element};
   box-shadow: ${({ theme }) => theme.shadow.main};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    height: 100%;
+  }
 `;
 
 export const Link = styled(OriginalLink)`
@@ -125,11 +152,26 @@ export const CountryList = styled.ul`
   margin-block-start: 16px;
   padding-inline: 16px;
   gap: 40px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    gap: 66px;
+    margin-block-start: 48px;
+  }
 `;
 
 export const StyledCountries = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: ${({ theme }) => theme.breakpoints.desktop};
+  margin: auto;
   color: ${({ theme }) => theme.palette.primary};
   background-color: ${({ theme }) => theme.background.default};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    padding-inline: 84px;
+  }
 `;

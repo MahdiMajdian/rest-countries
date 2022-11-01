@@ -9,7 +9,7 @@ export const ServiceContext = createContext<HTTPService>(null!);
 export const DEBOUNCE_DELAY = 200;
 
 export const REGIONS = [
-  { id: 0, name: 'All' },
+  { id: 0, name: 'Filter by Region' },
   { id: 1, name: 'Africa' },
   { id: 2, name: 'Americas' },
   { id: 3, name: 'Asia' },

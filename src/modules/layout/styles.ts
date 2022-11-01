@@ -24,11 +24,20 @@ export const NavBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: ${({ theme }) => theme.breakpoints.desktop};
   height: 80px;
+  margin: auto;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
+`;
+
+export const NavBarWrapper = styled.div`
   background-color: ${({ theme }) => theme.background.element};
   box-shadow: ${({ theme }) => theme.shadow.main};
   padding-inline: 16px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    padding-inline: 84px;
+  }
 `;
 
 export const StyledLayout = styled.div`
