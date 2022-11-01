@@ -1,10 +1,17 @@
-import React, { useContext, useEffect, useCallback, useMemo } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 
 import { observer } from 'mobx-react';
 
-import { ChevronDown, Magnifier } from '@assets/images';
+import { ChevronDown } from '@assets/images';
 import useQueryString from '@hooks/useQueryString';
 
+import { SearchInput } from './components';
 import {
   CountryList,
   Flag,
@@ -14,9 +21,6 @@ import {
   Title,
   Item,
   Value,
-  SearchBar,
-  SearchIcon,
-  Input,
   FilterByRegion,
   SelectBox,
   Icon,
@@ -24,29 +28,21 @@ import {
   Link,
   MenuBar,
 } from './styles';
-import {
-  DEBOUNCE_DELAY,
-  filterCountryByRegion,
-  REGIONS,
-  StoreContext,
-} from './utilities';
+import { filterCountryByRegion, REGIONS, StoreContext } from './utilities';
 function Countries(): React.ReactElement {
   const store = useContext(StoreContext);
-
-  const { value: searchQuery, changeValue: setSearchQuery } = useQueryString(
-    'search',
-    ''
-  );
-
+  const [searchQuery, setSearchQuery] = useState('');
   const { value: selectedRegion, changeValue: setSelectedRegion } =
     useQueryString('region', REGIONS[0].id);
 
-  const handleSearchQueryChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(event.target.value.replace(' ', ''));
-    },
-    []
-  );
+  const handleSearchQueryChange = useCallback((searchQuery: string) => {
+    setSearchQuery(searchQuery);
+    store.clearSearchedCountries();
+  }, []);
+
+  const handleSearchForCountries = useCallback((searchQuery: string) => {
+    store.searchForCountries(searchQuery);
+  }, []);
 
   const handleFilterByRegionChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -70,41 +66,16 @@ function Countries(): React.ReactElement {
   }, [store.searchedCountries, selectedRegion]);
 
   useEffect(() => {
-    if (searchQuery !== '') {
-      store.searchForCountries(searchQuery);
-    }
     store.getCountries();
   }, []);
-
-  useEffect(() => {
-    store.clearSearchedCountries();
-
-    if (searchQuery === '') {
-      return;
-    }
-
-    const debounceTimerId = window.setTimeout(() => {
-      store.searchForCountries(searchQuery);
-    }, DEBOUNCE_DELAY);
-
-    return () => {
-      clearTimeout(debounceTimerId);
-    };
-  }, [searchQuery]);
 
   return (
     <StyledCountries>
       <MenuBar>
-        <SearchBar>
-          <SearchIcon>
-            <Magnifier />
-          </SearchIcon>
-          <Input
-            value={searchQuery}
-            onChange={handleSearchQueryChange}
-            placeholder='Search for a country...'
-          />
-        </SearchBar>
+        <SearchInput
+          onQueryChange={handleSearchQueryChange}
+          onExecute={handleSearchForCountries}
+        />
 
         <FilterByRegion>
           <SelectBox
