@@ -4,6 +4,7 @@ export const lightTheme: Theme = {
   palette: {
     primary: 'hsl(200, 15%, 8%)',
     secondary: 'hsl(0, 0%, 52%)',
+    error: 'rgb(255, 79, 79)',
   },
   background: { default: 'hsl(0, 0%, 98%)', element: 'hsl(0, 0%, 100%)' },
   shadow: {
@@ -24,6 +25,7 @@ export const darkTheme: Theme = {
   palette: {
     primary: 'hsl(0, 0%, 100%)',
     secondary: 'hsl(0, 0%, 52%)',
+    error: 'rgb(255, 79, 79)',
   },
   background: { default: 'hsl(207, 26%, 17%)', element: 'hsl(209, 23%, 22%)' },
   shadow: {

@@ -59,12 +59,12 @@ class Store {
     this.searchedCountries = undefined;
   }
 
-  public async getCountryDetails(countryCode: string) {
+  public async getCountryDetails() {
     if (this.selectedCountryDetails !== undefined) {
       this.selectedCountryDetails = undefined;
     }
 
-    const countryDetails = await this.service.getCountryDetails(countryCode);
+    const countryDetails = await this.service.getCountryDetails();
     runInAction(() => {
       this.selectedCountryDetails = countryDetails;
     });
