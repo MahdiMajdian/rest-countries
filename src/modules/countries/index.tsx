@@ -1,14 +1,9 @@
-import React, {
-  useContext,
-  useEffect,
-  useCallback,
-  useState,
-  useMemo,
-} from 'react';
+import React, { useContext, useEffect, useCallback, useMemo } from 'react';
 
 import { observer } from 'mobx-react';
 
 import { ChevronDown, Magnifier } from '@assets/images';
+import useQueryString from '@hooks/useQueryString';
 
 import {
   CountryList,
@@ -29,17 +24,26 @@ import {
   Link,
   MenuBar,
 } from './styles';
-import { DEBOUNCE_DELAY, REGIONS, StoreContext } from './utilities';
-
+import {
+  DEBOUNCE_DELAY,
+  filterCountryByRegion,
+  REGIONS,
+  StoreContext,
+} from './utilities';
 function Countries(): React.ReactElement {
   const store = useContext(StoreContext);
 
-  const [selectedRegion, setSelectedRegion] = useState(REGIONS[0].name);
-  const [searchQuery, setSearchQuery] = useState('');
+  const { value: searchQuery, changeValue: setSearchQuery } = useQueryString(
+    'search',
+    ''
+  );
+
+  const { value: selectedRegion, changeValue: setSelectedRegion } =
+    useQueryString('region', REGIONS[0].id);
 
   const handleSearchQueryChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(event.target.value);
+      setSearchQuery(event.target.value.replace(' ', ''));
     },
     []
   );
@@ -55,31 +59,20 @@ function Countries(): React.ReactElement {
     if (store.countries === undefined) {
       return undefined;
     }
-
-    return store.countries.filter(({ region }) => {
-      if (selectedRegion === REGIONS[0].name) {
-        return true;
-      }
-
-      return region === selectedRegion;
-    });
+    return filterCountryByRegion(store.countries, selectedRegion);
   }, [store.countries, selectedRegion]);
 
   const searchedAndFilteredCountries = useMemo(() => {
     if (store.searchedCountries === undefined) {
       return undefined;
     }
-
-    return store.searchedCountries.filter(({ region }) => {
-      if (selectedRegion === REGIONS[0].name) {
-        return true;
-      }
-
-      return region === selectedRegion;
-    });
+    return filterCountryByRegion(store.searchedCountries, selectedRegion);
   }, [store.searchedCountries, selectedRegion]);
 
   useEffect(() => {
+    if (searchQuery !== '') {
+      store.searchForCountries(searchQuery);
+    }
     store.getCountries();
   }, []);
 
@@ -119,8 +112,8 @@ function Countries(): React.ReactElement {
             value={selectedRegion}
           >
             {REGIONS.map((region) => (
-              <Option key={region.id} value={region.name}>
-                {region.name}
+              <Option key={region.id} value={region.id}>
+                {region.label}
               </Option>
             ))}
           </SelectBox>
