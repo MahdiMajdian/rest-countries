@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CountryCard Snapshot renders 1`] = `
+<div>
+  <div
+    class="css-0"
+  >
+    <a
+      class="css-1531qan"
+      href="/country/IRN"
+    >
+      <li
+        class="css-ljqmsu"
+      >
+        <img
+          alt="Iran (Free)"
+          class="css-1wgma18"
+          loading="lazy"
+          src="https://flagcdn.com/ir.svg"
+        />
+        <div
+          class="css-9g30kh"
+        >
+          <p
+            class="css-1f8j690"
+          >
+            Iran (Free)
+          </p>
+          <div
+            class="css-2z47v6"
+          >
+            Population: 
+            <span
+              class="css-1eh4m9q"
+            >
+              85000000
+            </span>
+          </div>
+          <div
+            class="css-2z47v6"
+          >
+            Region: 
+            <span
+              class="css-1eh4m9q"
+            >
+              Asia
+            </span>
+          </div>
+          <div
+            class="css-2z47v6"
+          >
+            Capital: 
+            <span
+              class="css-1eh4m9q"
+            >
+              Tehran
+            </span>
+          </div>
+        </div>
+      </li>
+    </a>
+  </div>
+</div>
+`;
