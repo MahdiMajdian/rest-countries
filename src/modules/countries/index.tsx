@@ -27,6 +27,7 @@ import {
   Icon,
   Option,
   Link,
+  MenuBar,
 } from './styles';
 import { DEBOUNCE_DELAY, REGIONS, StoreContext } from './utilities';
 
@@ -100,30 +101,35 @@ function Countries(): React.ReactElement {
 
   return (
     <StyledCountries>
-      <SearchBar>
-        <SearchIcon>
-          <Magnifier />
-        </SearchIcon>
-        <Input
-          value={searchQuery}
-          onChange={handleSearchQueryChange}
-          placeholder='Search for a country...'
-        />
-      </SearchBar>
+      <MenuBar>
+        <SearchBar>
+          <SearchIcon>
+            <Magnifier />
+          </SearchIcon>
+          <Input
+            value={searchQuery}
+            onChange={handleSearchQueryChange}
+            placeholder='Search for a country...'
+          />
+        </SearchBar>
 
-      <FilterByRegion>
-        <SelectBox onChange={handleFilterByRegionChange} value={selectedRegion}>
-          {REGIONS.map((region) => (
-            <Option key={region.id} value={region.name}>
-              {region.name}
-            </Option>
-          ))}
-        </SelectBox>
+        <FilterByRegion>
+          <SelectBox
+            onChange={handleFilterByRegionChange}
+            value={selectedRegion}
+          >
+            {REGIONS.map((region) => (
+              <Option key={region.id} value={region.name}>
+                {region.name}
+              </Option>
+            ))}
+          </SelectBox>
 
-        <Icon>
-          <ChevronDown />
-        </Icon>
-      </FilterByRegion>
+          <Icon>
+            <ChevronDown />
+          </Icon>
+        </FilterByRegion>
+      </MenuBar>
 
       <CountryList>
         {searchQuery === ''

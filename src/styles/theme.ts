@@ -14,6 +14,10 @@ export const lightTheme: Theme = {
     normal: 600,
     bold: 800,
   },
+  breakpoints: {
+    mobile: '375xp',
+    desktop: '1440px',
+  },
 };
 
 export const darkTheme: Theme = {
@@ -29,5 +33,9 @@ export const darkTheme: Theme = {
     light: 300,
     normal: 600,
     bold: 800,
+  },
+  breakpoints: {
+    mobile: '375xp',
+    desktop: '1440px',
   },
 };
