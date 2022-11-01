@@ -85,8 +85,19 @@ export interface CountryDetails {
   borderCountries: Nullable<(keyof typeof COUNTRY_NAMES)[]>;
 }
 
+export interface ErrorType {
+  message: string;
+}
+
 export interface HTTPService {
   getCountries: () => Promise<Nullable<Country[]>>;
-  getCountryDetails: (countryCode: string) => Promise<Nullable<CountryDetails>>;
+  getCountriesError: Nullable<ErrorType>;
+
+  getCountryDetails: () => Promise<Nullable<CountryDetails>>;
+  getCountryDetailsError: Nullable<ErrorType>;
+
   searchForCountries: (query: string) => Promise<Nullable<Country[]>>;
+  searchForCountriesError: Nullable<ErrorType>;
+
+  countryCode: Nullable<string>;
 }
