@@ -132,9 +132,8 @@ export const DetailsWrapper = styled.div`
 export const StyledCountryDetails = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: ${({ theme }) => theme.breakpoints.desktop};
+  margin: auto;
   padding-inline: 24px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    padding-inline: 96px;
-  }
+  margin-block-end: 48px;
 `;
