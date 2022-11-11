@@ -4,14 +4,9 @@
 
 ![Rest_Countries_Desktop_Light](https://user-images.githubusercontent.com/19470034/200185068-9bfbe533-c22a-4820-a8df-fc1bb41367b0.png)
 
+![Rest_Countries_Mobile_Dark](https://user-images.githubusercontent.com/19470034/200184212-1654c428-5c2c-46c9-9595-7320e9e19ca4.png)
 
-<div style='display:flex;width:100%;justify-content:center;'> 
-
-<img src="https://user-images.githubusercontent.com/19470034/200184212-1654c428-5c2c-46c9-9595-7320e9e19ca4.png" alt="Rest_Countries_Mobile_Dark" width='50%'>
-
-<img src="https://user-images.githubusercontent.com/19470034/200184289-20985f07-cc29-47a4-96be-73f0164d1077.png" alt="Rest_Countries_Mobile_Light" width='50%'>
-
-</div>
+![Rest_Countries_Mobile_Light](https://user-images.githubusercontent.com/19470034/200184289-20985f07-cc29-47a4-96be-73f0164d1077.png)
 
 </br>
 </br>
@@ -29,12 +24,10 @@
 
 ## 🖥 Demo
 
-- [Rest Countries](https://lucky-empanada-bc56fb.netlify.app/)
+- [Rest Countries](https://rest-countries-mahdimajdian.vercel.app/)
 
-<!-- </br> -->
 
 ## 📜 Run the codebase on your system:
-</br>
 
 ### Install the dependencies and start the app:
 ```
