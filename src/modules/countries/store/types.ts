@@ -13,4 +13,5 @@ export interface Country {
 
 export interface HTTPService {
   getCountries: () => Promise<Nullable<Country[]>>;
+  searchForCountries: (query: string) => Promise<Nullable<Country[]>>;
 }

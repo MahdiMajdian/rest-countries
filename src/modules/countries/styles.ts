@@ -32,6 +32,42 @@ export const NavBar = styled.div`
   padding-inline: 16px;
 `;
 
+export const Input = styled.input`
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  color: ${({ theme }) => theme.palette.secondary};
+  background-color: transparent;
+`;
+
+export const SearchIcon = styled.button`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  padding-inline: 32px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: ${({ theme }) => theme.palette.secondary};
+  }
+`;
+
+export const SearchBar = styled.div`
+  display: flex;
+  align-items: center;
+  height: 48px;
+  border-radius: 4px;
+  color: ${({ theme }) => theme.palette.secondary};
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
+  margin-block: 24px;
+  margin-inline: 16px;
+`;
+
 export const Item = styled.div`
   font-weight: bold;
   font-size: 12px;
