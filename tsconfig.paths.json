@@ -15,7 +15,9 @@
         "@api": ["./api"],
         "@api/*": ["./api/*"],
         "@modules": ["./modules"],
-        "@modules/*": ["./modules/*"]
+        "@modules/*": ["./modules/*"],
+        "@hooks": ["./library/hooks"],
+        "@hooks/*": ["./library/hooks/*"]
       }
     }
   }
