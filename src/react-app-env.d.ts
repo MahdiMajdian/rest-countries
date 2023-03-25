@@ -4,6 +4,8 @@
 import { ReactNode } from 'react';
 import '@emotion/react';
 
+type FontWeight = 300 | 600 | 800;
+
 declare global {
   type PropsWithMandatoryChildren<TProps> = TProps & { children: ReactNode };
 
@@ -28,6 +30,11 @@ declare module '@emotion/react' {
     };
     shadow: {
       main: string;
+    };
+    fontWeight: {
+      light: FontWeight;
+      normal: FontWeight;
+      bold: FontWeight;
     };
   }
 }

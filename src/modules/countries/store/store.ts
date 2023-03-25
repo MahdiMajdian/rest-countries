@@ -18,6 +18,7 @@ class Store {
       getCountries: action.bound,
       searchedCountries: observable,
       searchForCountries: action.bound,
+      clearSearchedCountries: action.bound,
     });
 
     this.countries = undefined;
@@ -48,6 +49,10 @@ class Store {
     runInAction(() => {
       this.searchedCountries = searchedCountries;
     });
+  }
+
+  public clearSearchedCountries() {
+    this.searchedCountries = undefined;
   }
 }
 

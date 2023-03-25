@@ -6,11 +6,10 @@ export const Text = styled.span``;
 
 export const ToggleDarkMode = styled.button`
   display: flex;
-  justify-content: center;
   align-items: center;
   border: none;
   color: ${({ theme }) => theme.palette.primary};
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.fontWeight.light};
   background: none;
   gap: 6px;
 
@@ -26,34 +25,31 @@ export const NavBar = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
   background-color: ${({ theme }) => theme.background.element};
   box-shadow: ${({ theme }) => theme.shadow.main};
   padding-inline: 16px;
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  color: ${({ theme }) => theme.palette.secondary};
-  background-color: transparent;
-`;
-
-export const SearchIcon = styled.button`
+export const SearchIcon = styled.div`
   display: flex;
   align-items: center;
-  height: 100%;
-  border: none;
-  background-color: transparent;
   padding-inline: 32px;
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     fill: ${({ theme }) => theme.palette.secondary};
   }
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  border: none;
+  outline: none;
+  color: ${({ theme }) => theme.palette.secondary};
+  font-size: 16px;
+  background: none;
 `;
 
 export const SearchBar = styled.div`
@@ -68,19 +64,60 @@ export const SearchBar = styled.div`
   margin-inline: 16px;
 `;
 
+export const Option = styled.option``;
+
+export const SelectBox = styled.select`
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  color: ${({ theme }) => theme.palette.primary};
+  font-size: 16px;
+  font-family: inherit;
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
+  appearance: none;
+  padding-inline: 16px;
+`;
+
+export const Icon = styled.div`
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  padding-inline-end: 16px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: ${({ theme }) => theme.palette.primary};
+  }
+`;
+
+export const FilterByRegion = styled.div`
+  display: flex;
+  position: relative;
+  width: 55%;
+  height: 48px;
+  margin-block: 16px;
+  margin-inline: 16px;
+`;
+
 export const Item = styled.div`
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeight.normal};
   font-size: 12px;
   margin-block-end: 12px;
 `;
 
 export const Value = styled.span`
-  font-weight: normal;
+  font-weight: ${({ theme }) => theme.fontWeight.light};
   font-size: 12px;
 `;
 
 export const Title = styled.p`
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
   margin-block-end: 24px;
 `;
 
@@ -116,6 +153,8 @@ export const CountryList = styled.ul`
 `;
 
 export const StyledCountries = styled.div`
+  display: flex;
+  flex-direction: column;
   color: ${({ theme }) => theme.palette.primary};
   background-color: ${({ theme }) => theme.background.default};
 `;

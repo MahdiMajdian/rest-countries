@@ -9,6 +9,11 @@ export const lightTheme: Theme = {
   shadow: {
     main: '0px 0px 4px rgba(0, 0, 0, 0.1)',
   },
+  fontWeight: {
+    light: 300,
+    normal: 600,
+    bold: 800,
+  },
 };
 
 export const darkTheme: Theme = {
@@ -18,6 +23,11 @@ export const darkTheme: Theme = {
   },
   background: { default: 'hsl(207, 26%, 17%)', element: 'hsl(209, 23%, 22%)' },
   shadow: {
-    main: '0px 0px 4px rgba(0, 0, 0, 0.2)',
+    main: '0px 0px 4px rgba(0, 0, 0, 0.1)',
+  },
+  fontWeight: {
+    light: 300,
+    normal: 600,
+    bold: 800,
   },
 };
