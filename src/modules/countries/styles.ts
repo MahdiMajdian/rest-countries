@@ -59,6 +59,45 @@ export const MenuBar = styled.div`
   }
 `;
 
+export const ErrorText = styled.p`
+  color: ${({ theme }) => theme.palette.error};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  text-transform: capitalize;
+`;
+
+export const ReloadButton = styled.button`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: none;
+  border-radius: 4px;
+  color: ${({ theme }) => theme.palette.primary};
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
+  gap: 6px;
+  margin-block: 24px;
+  padding-block: 8px;
+  padding-inline: 16px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: ${({ theme }) => theme.palette.primary};
+  }
+`;
+
+export const ReloadBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const LoadingText = styled.p`
+  color: ${({ theme }) => theme.palette.primary};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  text-transform: capitalize;
+`;
+
 export const CountryList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -81,6 +120,7 @@ export const StyledCountries = styled.div`
   flex-direction: column;
   max-width: ${({ theme }) => theme.breakpoints.desktop};
   margin: auto;
+  margin-block-start: 16px;
   color: ${({ theme }) => theme.palette.primary};
   background-color: ${({ theme }) => theme.background.default};
 

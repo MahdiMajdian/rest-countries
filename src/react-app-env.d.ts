@@ -23,6 +23,7 @@ declare module '@emotion/react' {
     palette: {
       primary: string;
       secondary: string;
+      error: string;
     };
     background: {
       default: string;

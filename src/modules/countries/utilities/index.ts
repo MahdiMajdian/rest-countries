@@ -17,6 +17,12 @@ export const REGIONS = [
   { id: 'oceania', label: 'Oceania' },
 ];
 
+export const ERROR_MESSAGES = {
+  TIME_OUT: 'we have encountered a problem while connecting to the server!',
+  NOT_FOUND: 'searched country was not found!',
+  BAD_REQUEST: "country doesn't exists!",
+};
+
 export { COUNTRY_NAMES } from './countries-name';
 export { ThreeLetterCountryCodeToFullName } from './convertCountryName';
 export { filterCountryByRegion } from './filterCountryByRegion';

@@ -71,6 +71,7 @@ export const CountryName = styled.p`
 
 export const BorderCountry = styled.li`
   border-radius: 4px;
+  cursor: pointer;
   background-color: ${({ theme }) => theme.background.element};
   box-shadow: ${({ theme }) => theme.shadow.main};
   padding-block: 8px;

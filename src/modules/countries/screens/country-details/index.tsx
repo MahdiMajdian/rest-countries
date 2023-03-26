@@ -3,8 +3,16 @@ import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { ArrowLeft } from '@assets/images';
+import { ArrowLeft, Reload } from '@assets/images';
 import {
+  ErrorText,
+  LoadingText,
+  ReloadBox,
+  ReloadButton,
+} from '@modules/countries/styles';
+import {
+  ERROR_MESSAGES,
+  ServiceContext,
   StoreContext,
   ThreeLetterCountryCodeToFullName,
 } from '@modules/countries/utilities';
@@ -29,12 +37,23 @@ import {
 
 function CountryDetails() {
   const store = useContext(StoreContext);
+  const httpService = useContext(ServiceContext);
+
   const { countryCode } = useParams();
   const navigate = useNavigate();
 
   const handleNavigateBack = useCallback(() => {
     navigate(-1);
   }, []);
+
+  const handleRetryGetCountryDetails = useCallback(() => {
+    if (countryCode === undefined) {
+      return;
+    }
+
+    httpService.countryCode = countryCode;
+    store.getCountryDetails();
+  }, [countryCode]);
 
   const countryDetails = useMemo(() => {
     if (store.selectedCountryDetails === undefined) {
@@ -44,12 +63,34 @@ function CountryDetails() {
     return store.selectedCountryDetails;
   }, [store.selectedCountryDetails === undefined]);
 
+  const getCountryDetailsErrorContent = useMemo(() => {
+    const error = httpService.getCountryDetailsError;
+    if (error === undefined) {
+      return;
+    }
+
+    switch (error.message) {
+      case ERROR_MESSAGES.TIME_OUT:
+        return (
+          <ReloadBox>
+            <ErrorText>{ERROR_MESSAGES.TIME_OUT}</ErrorText>
+            <ReloadButton onClick={handleRetryGetCountryDetails}>
+              Reload data
+              <Reload />
+            </ReloadButton>
+          </ReloadBox>
+        );
+      case ERROR_MESSAGES.BAD_REQUEST:
+        return <ErrorText>{ERROR_MESSAGES.BAD_REQUEST}!</ErrorText>;
+    }
+  }, [httpService.getCountryDetailsError]);
+
   useEffect(() => {
     if (countryCode === undefined) {
       return;
     }
-
-    store.getCountryDetails(countryCode);
+    httpService.countryCode = countryCode;
+    store.getCountryDetails();
   }, [countryCode]);
 
   return (
@@ -60,7 +101,11 @@ function CountryDetails() {
       </BackButton>
 
       {countryDetails === undefined ? (
-        'loading details'
+        httpService.getCountryDetailsError ? (
+          getCountryDetailsErrorContent
+        ) : (
+          <LoadingText>loading details...</LoadingText>
+        )
       ) : (
         <DetailsWrapper>
           <Flag>

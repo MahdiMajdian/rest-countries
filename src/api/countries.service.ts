@@ -1,15 +1,28 @@
 import axios from 'axios';
+import { action, makeObservable, observable } from 'mobx';
 
 import { Country, HTTPService } from '@modules/countries/store';
-import { CountryDetails, ServerCountry } from '@modules/countries/store/types';
+import {
+  CountryDetails,
+  ErrorType,
+  ServerCountry,
+} from '@modules/countries/store/types';
+import { isAxiosError, Nullable, apiErrorHandler } from '@utilities';
 
 let searchForCountriesAbortController: AbortController | null = null;
 let getCountriesAbortController: AbortController | null = null;
+let getCountryDetailsAbortController: AbortController | null = null;
 
 let service: HTTPServiceImpl;
-
+const COUNTRY_DETAILS_FIELDS =
+  'name,alpha3Code,nativeName,population,region,subregion,capital,flag,currencies,topLevelDomain,languages,borders';
+const COUNTRIES_FIELDS = 'name,flags,population,region,capital,alpha3Code';
 class HTTPServiceImpl implements HTTPService {
   private BASE_URL;
+  public searchForCountriesError: Nullable<ErrorType>;
+  public getCountriesError: Nullable<ErrorType>;
+  public getCountryDetailsError: Nullable<ErrorType>;
+  public countryCode: Nullable<string>;
 
   public constructor() {
     const baseURL = process.env.REACT_APP_COUNTRIES_HOST;
@@ -18,7 +31,20 @@ class HTTPServiceImpl implements HTTPService {
       throw new Error('base url is not provided as a environment variable');
     }
 
+    makeObservable(this, {
+      searchForCountriesError: observable,
+      searchForCountries: action.bound,
+      getCountriesError: observable,
+      getCountries: action.bound,
+      getCountryDetailsError: observable,
+      getCountryDetails: action.bound,
+    });
+
     this.BASE_URL = baseURL;
+    this.searchForCountriesError = undefined;
+    this.getCountriesError = undefined;
+    this.getCountryDetailsError = undefined;
+    this.countryCode = undefined;
   }
 
   public async getCountries() {
@@ -28,14 +54,14 @@ class HTTPServiceImpl implements HTTPService {
 
     try {
       getCountriesAbortController = new AbortController();
+      this.getCountriesError = undefined;
 
-      const response = await axios.get(`${this.BASE_URL}/v2/all`, {
-        signal: getCountriesAbortController.signal,
-      });
-
-      if (response.status !== 200) {
-        throw new Error('Something went wrong!');
-      }
+      const response = await axios.get(
+        `${this.BASE_URL}/v2/all?fields=${COUNTRIES_FIELDS}`,
+        {
+          signal: getCountriesAbortController.signal,
+        }
+      );
 
       const data: ServerCountry[] = response.data;
 
@@ -47,7 +73,9 @@ class HTTPServiceImpl implements HTTPService {
 
       return countries;
     } catch (error) {
-      // TODO: handle error here
+      if (isAxiosError(error)) {
+        this.getCountriesError = apiErrorHandler(error);
+      }
     }
   }
 
@@ -58,14 +86,14 @@ class HTTPServiceImpl implements HTTPService {
 
     try {
       searchForCountriesAbortController = new AbortController();
+      this.searchForCountriesError = undefined;
 
-      const response = await axios.get(`${this.BASE_URL}/v2/name/${query}`, {
-        signal: searchForCountriesAbortController.signal,
-      });
-
-      if (response.status !== 200) {
-        throw new Error('Something went wrong!');
-      }
+      const response = await axios.get(
+        `${this.BASE_URL}/v2/name/${query}?fields=${COUNTRIES_FIELDS}`,
+        {
+          signal: searchForCountriesAbortController.signal,
+        }
+      );
 
       const data: ServerCountry[] = response.data;
 
@@ -77,7 +105,9 @@ class HTTPServiceImpl implements HTTPService {
 
       return searchedCountries;
     } catch (error) {
-      // TODO: handle error here
+      if (isAxiosError(error)) {
+        this.searchForCountriesError = apiErrorHandler(error);
+      }
     }
   }
 
@@ -89,36 +119,46 @@ class HTTPServiceImpl implements HTTPService {
         population: countries.population,
         region: countries.region,
         capital: countries.capital,
-        flag: { src: countries.flag },
+        flag: { src: countries.flags.svg },
       };
     });
 
     return transformedCountries;
   }
 
-  public async getCountryDetails(countryCode: string) {
+  public async getCountryDetails() {
+    if (getCountryDetailsAbortController) {
+      getCountryDetailsAbortController.abort();
+    }
+
     try {
-      const response = await fetch(`${this.BASE_URL}/v2/alpha/${countryCode}`);
+      getCountryDetailsAbortController = new AbortController();
+      this.getCountryDetailsError = undefined;
 
-      if (!response.ok) {
-        throw new Error('Connection failed with fetching data');
-      }
+      const response = await axios.get(
+        `${this.BASE_URL}/v2/alpha/${this.countryCode}?fields=${COUNTRY_DETAILS_FIELDS}`,
+        {
+          signal: getCountryDetailsAbortController.signal,
+        }
+      );
 
-      const data: ServerCountry = await response.json();
+      const data: ServerCountry = await response.data;
 
       if (data === undefined) {
         throw new Error('received data is corrupted');
       }
 
-      const countryDetails = this.transformCountry(data);
+      const countryDetails = this.transformCountryDetails(data);
 
       return countryDetails;
     } catch (error) {
-      // TODO: handle error here
+      if (isAxiosError(error)) {
+        this.getCountryDetailsError = apiErrorHandler(error);
+      }
     }
   }
 
-  private transformCountry(country: ServerCountry): CountryDetails {
+  private transformCountryDetails(country: ServerCountry): CountryDetails {
     return {
       id: country.alpha3Code,
       name: country.name,
@@ -136,8 +176,12 @@ class HTTPServiceImpl implements HTTPService {
   }
 }
 
-const getService = () => {
-  return service || new HTTPServiceImpl();
-};
+function getService() {
+  if (service === undefined) {
+    service = new HTTPServiceImpl();
+  }
+
+  return service;
+}
 
 export default getService;
