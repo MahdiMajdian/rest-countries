@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+<h1 align=center>Rest Countries</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Rest_Countries_Desktop_Dark](https://user-images.githubusercontent.com/19470034/200184059-0ac505e2-56fd-418e-a8de-dfe572f025fd.png)
 
-## Available Scripts
+![Rest_Countries_Desktop_Light](https://user-images.githubusercontent.com/19470034/200185068-9bfbe533-c22a-4820-a8df-fc1bb41367b0.png)
 
-In the project directory, you can run:
 
-### `yarn start`
+<div style='display:flex;width:100%;justify-content:center;'> 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img src="https://user-images.githubusercontent.com/19470034/200184212-1654c428-5c2c-46c9-9595-7320e9e19ca4.png" alt="Rest_Countries_Mobile_Dark" width='50%'>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<img src="https://user-images.githubusercontent.com/19470034/200184289-20985f07-cc29-47a4-96be-73f0164d1077.png" alt="Rest_Countries_Mobile_Light" width='50%'>
 
-### `yarn test`
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+</br>
+</br>
 
-### `yarn build`
+## 🏗  Build using:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [React](https://reactjs.org/) - a popular user interface JavaScript library.
+- [Typescript](https://reactjs.org/docs/hooks-intro.html) - a strict syntactical superset of JavaScript which adds optional static typing.
+- [Context API](https://reactjs.org/docs/context.html) - Allows passing of data through component trees, giving our components the ability to share data at different levels.
+- [Jest](https://reactjs.org/docs/context.html) - a JavaScript testing framework designed to ensure correctness of any JavaScript codebase.
+- [TestingLibrary](https://reactjs.org/docs/context.html) - a light-weight solution for testing React components.
+- [Emotion](https://reactjs.org/docs/context.html) - a library designed for writing css styles with JavaScript.
+- [MobX](https://reactjs.org/docs/context.html) - an unopinionated state management library outside of any UI framework.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🖥 Demo
 
-### `yarn eject`
+- [Rest Countries](https://lucky-empanada-bc56fb.netlify.app/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<!-- </br> -->
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📜 Run the codebase on your system:
+</br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Install the dependencies and start the app:
+```
+yarn add 
+yarn start
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Run the test cases in watch mode:
 
-## Learn More
+```
+yarn test
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Lint the code with ESLint (make sure ESLint plugin is installed):
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+yarn lint
+```
+### Check for typescript problems:
+
+```
+yarn typescript
+```
