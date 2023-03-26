@@ -123,8 +123,8 @@ export const Information = styled.div`
 
 export const Flag = styled.img`
   width: 100%;
-  height: auto;
-  max-height: 200px;
+  aspect-ratio: 1.7;
+  object-fit: cover;
 `;
 
 export const Card = styled.li`

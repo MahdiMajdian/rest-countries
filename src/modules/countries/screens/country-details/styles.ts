@@ -24,17 +24,13 @@ export const BackButton = styled.button`
 export const Flag = styled.div`
   img {
     width: 100%;
-    height: auto;
-    max-height: 250px;
+    aspect-ratio: 1.7;
+    object-fit: cover;
     margin-block: 24px;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     width: 100%;
-
-    img {
-      max-height: unset;
-    }
   }
 `;
 

@@ -28,16 +28,16 @@ export const NavBar = styled.div`
   height: 80px;
   margin: auto;
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-`;
-
-export const NavBarWrapper = styled.div`
-  background-color: ${({ theme }) => theme.background.element};
-  box-shadow: ${({ theme }) => theme.shadow.main};
   padding-inline: 16px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     padding-inline: 84px;
   }
+`;
+
+export const NavBarWrapper = styled.div`
+  background-color: ${({ theme }) => theme.background.element};
+  box-shadow: ${({ theme }) => theme.shadow.main};
 `;
 
 export const StyledLayout = styled.div`
