@@ -1,5 +1,10 @@
+import axios from 'axios';
+
 import { Country, HTTPService } from '@modules/countries/store';
 import { CountryDetails, ServerCountry } from '@modules/countries/store/types';
+
+let searchForCountriesAbortController: AbortController | null = null;
+let getCountriesAbortController: AbortController | null = null;
 
 let service: HTTPServiceImpl;
 
@@ -17,14 +22,22 @@ class HTTPServiceImpl implements HTTPService {
   }
 
   public async getCountries() {
-    try {
-      const response = await fetch(`${this.BASE_URL}/v2/all`);
+    if (getCountriesAbortController) {
+      getCountriesAbortController.abort();
+    }
 
-      if (!response.ok) {
-        throw new Error('Connection failed with fetching data');
+    try {
+      getCountriesAbortController = new AbortController();
+
+      const response = await axios.get(`${this.BASE_URL}/v2/all`, {
+        signal: getCountriesAbortController.signal,
+      });
+
+      if (response.status !== 200) {
+        throw new Error('Something went wrong!');
       }
 
-      const data: ServerCountry[] = await response.json();
+      const data: ServerCountry[] = response.data;
 
       if (data === undefined) {
         throw new Error('received data is corrupted');
@@ -39,14 +52,22 @@ class HTTPServiceImpl implements HTTPService {
   }
 
   public async searchForCountries(query: string) {
-    try {
-      const response = await fetch(`${this.BASE_URL}/v2/name/${query}`);
+    if (searchForCountriesAbortController) {
+      searchForCountriesAbortController.abort();
+    }
 
-      if (!response.ok) {
-        throw new Error('Connection failed with fetching data');
+    try {
+      searchForCountriesAbortController = new AbortController();
+
+      const response = await axios.get(`${this.BASE_URL}/v2/name/${query}`, {
+        signal: searchForCountriesAbortController.signal,
+      });
+
+      if (response.status !== 200) {
+        throw new Error('Something went wrong!');
       }
 
-      const data: ServerCountry[] = await response.json();
+      const data: ServerCountry[] = response.data;
 
       if (data === undefined) {
         throw new Error('received data is corrupted');
