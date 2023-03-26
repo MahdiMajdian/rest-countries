@@ -13,7 +13,7 @@ const getParamValue = (key: string) => {
   return searchParams.get(key);
 };
 
-describe('AppBar', () => {
+describe('SearchInput', () => {
   it('renders the typed value', async () => {
     const callback = jest.fn();
 

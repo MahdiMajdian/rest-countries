@@ -11,21 +11,14 @@ import { observer } from 'mobx-react';
 import { ChevronDown } from '@assets/images';
 import useQueryString from '@hooks/useQueryString';
 
-import { SearchInput } from './components';
+import { CountryCard, SearchInput } from './components';
 import {
   CountryList,
-  Flag,
-  Information,
-  Card,
   StyledCountries,
-  Title,
-  Item,
-  Value,
   FilterByRegion,
   SelectBox,
   Icon,
   Option,
-  Link,
   MenuBar,
 } from './styles';
 import { filterCountryByRegion, REGIONS, StoreContext } from './utilities';
@@ -100,29 +93,7 @@ function Countries(): React.ReactElement {
           ? filteredCountries === undefined
             ? 'Loading All Countries...'
             : filteredCountries.map((country) => {
-                return (
-                  <Link key={country.id} to={`/country/${country.id}`}>
-                    <Card>
-                      <Flag
-                        src={country.flag.src}
-                        alt={country.name}
-                        loading={'lazy'}
-                      />
-                      <Information>
-                        <Title>{country.name}</Title>
-                        <Item>
-                          Population: <Value>{country.population}</Value>
-                        </Item>
-                        <Item>
-                          Region: <Value>{country.region}</Value>
-                        </Item>
-                        <Item>
-                          Capital: <Value>{country.capital}</Value>
-                        </Item>
-                      </Information>
-                    </Card>
-                  </Link>
-                );
+                return <CountryCard key={country.id} country={country} />;
               })
           : searchedAndFilteredCountries === undefined
           ? `Searching for ${searchQuery}`
@@ -130,25 +101,7 @@ function Countries(): React.ReactElement {
             searchedAndFilteredCountries.length === 0
           ? 'Nothing was found!'
           : searchedAndFilteredCountries.map((country) => {
-              return (
-                <Link key={country.id} to={`/country/${country.id}`}>
-                  <Card>
-                    <Flag src={country.flag.src} alt='' />
-                    <Information>
-                      <Title>{country.name}</Title>
-                      <Item>
-                        Population: <Value>{country.population}</Value>
-                      </Item>
-                      <Item>
-                        Region: <Value>{country.region}</Value>
-                      </Item>
-                      <Item>
-                        Capital: <Value>{country.capital}</Value>
-                      </Item>
-                    </Information>
-                  </Card>
-                </Link>
-              );
+              return <CountryCard key={country.id} country={country} />;
             })}
       </CountryList>
     </StyledCountries>
