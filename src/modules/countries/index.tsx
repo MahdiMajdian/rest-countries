@@ -8,22 +8,17 @@ import React, {
 
 import { observer } from 'mobx-react';
 
-import { DownArrow, Magnifier, Moon, MoonFill } from '@assets/images';
-import { DarkModeContext } from '@utilities';
+import { ChevronDown, Magnifier } from '@assets/images';
 
 import {
   CountryList,
   Flag,
-  NavBar,
   Information,
   Card,
   StyledCountries,
   Title,
   Item,
   Value,
-  ToggleDarkMode,
-  Header,
-  Text,
   SearchBar,
   SearchIcon,
   Input,
@@ -31,37 +26,15 @@ import {
   SelectBox,
   Icon,
   Option,
+  Link,
 } from './styles';
-import { StoreContext } from './utilities';
-
-const DEBOUNCE_DELAY = 200;
-
-const REGIONS = [
-  { id: 0, name: 'All' },
-  { id: 1, name: 'Africa' },
-  { id: 2, name: 'Americas' },
-  { id: 3, name: 'Asia' },
-  { id: 4, name: 'Europe' },
-  { id: 5, name: 'Oceania' },
-];
+import { DEBOUNCE_DELAY, REGIONS, StoreContext } from './utilities';
 
 function Countries(): React.ReactElement {
   const store = useContext(StoreContext);
-  const { toggleTheme, isDarkMode } = useContext(DarkModeContext);
 
   const [selectedRegion, setSelectedRegion] = useState(REGIONS[0].name);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const handleDarkModeToggle = useCallback(() => {
-    toggleTheme();
-  }, []);
-
-  const handleFilterByRegionChange = useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setSelectedRegion(event.target.value);
-    },
-    []
-  );
 
   const handleSearchQueryChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,25 +43,12 @@ function Countries(): React.ReactElement {
     []
   );
 
-  useEffect(() => {
-    store.getCountries();
-  }, []);
-
-  useEffect(() => {
-    store.clearSearchedCountries();
-
-    if (searchQuery === '') {
-      return;
-    }
-
-    const debounceTimerId = window.setTimeout(() => {
-      store.searchForCountries(searchQuery);
-    }, DEBOUNCE_DELAY);
-
-    return () => {
-      clearTimeout(debounceTimerId);
-    };
-  }, [searchQuery]);
+  const handleFilterByRegionChange = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedRegion(event.target.value);
+    },
+    []
+  );
 
   const filteredCountries = useMemo(() => {
     if (store.countries === undefined) {
@@ -118,25 +78,28 @@ function Countries(): React.ReactElement {
     });
   }, [store.searchedCountries, selectedRegion]);
 
+  useEffect(() => {
+    store.getCountries();
+  }, []);
+
+  useEffect(() => {
+    store.clearSearchedCountries();
+
+    if (searchQuery === '') {
+      return;
+    }
+
+    const debounceTimerId = window.setTimeout(() => {
+      store.searchForCountries(searchQuery);
+    }, DEBOUNCE_DELAY);
+
+    return () => {
+      clearTimeout(debounceTimerId);
+    };
+  }, [searchQuery]);
+
   return (
     <StyledCountries>
-      <NavBar>
-        <Header>Where in the world?</Header>
-        <ToggleDarkMode onClick={handleDarkModeToggle}>
-          {isDarkMode ? (
-            <>
-              <MoonFill />
-              <Text>Light Mode</Text>
-            </>
-          ) : (
-            <>
-              <Moon />
-              <Text>Dark Mode</Text>
-            </>
-          )}
-        </ToggleDarkMode>
-      </NavBar>
-
       <SearchBar>
         <SearchIcon>
           <Magnifier />
@@ -158,7 +121,7 @@ function Countries(): React.ReactElement {
         </SelectBox>
 
         <Icon>
-          <DownArrow />
+          <ChevronDown />
         </Icon>
       </FilterByRegion>
 
@@ -168,12 +131,39 @@ function Countries(): React.ReactElement {
             ? 'Loading All Countries...'
             : filteredCountries.map((country) => {
                 return (
-                  <Card key={country.id}>
-                    <Flag
-                      src={country.flag.src}
-                      alt={country.name}
-                      loading={'lazy'}
-                    />
+                  <Link key={country.id} to={`/country/${country.id}`}>
+                    <Card>
+                      <Flag
+                        src={country.flag.src}
+                        alt={country.name}
+                        loading={'lazy'}
+                      />
+                      <Information>
+                        <Title>{country.name}</Title>
+                        <Item>
+                          Population: <Value>{country.population}</Value>
+                        </Item>
+                        <Item>
+                          Region: <Value>{country.region}</Value>
+                        </Item>
+                        <Item>
+                          Capital: <Value>{country.capital}</Value>
+                        </Item>
+                      </Information>
+                    </Card>
+                  </Link>
+                );
+              })
+          : searchedAndFilteredCountries === undefined
+          ? `Searching for ${searchQuery}`
+          : searchedAndFilteredCountries &&
+            searchedAndFilteredCountries.length === 0
+          ? 'Nothing was found!'
+          : searchedAndFilteredCountries.map((country) => {
+              return (
+                <Link key={country.id} to={`/country/${country.id}`}>
+                  <Card>
+                    <Flag src={country.flag.src} alt='' />
                     <Information>
                       <Title>{country.name}</Title>
                       <Item>
@@ -187,30 +177,7 @@ function Countries(): React.ReactElement {
                       </Item>
                     </Information>
                   </Card>
-                );
-              })
-          : searchedAndFilteredCountries === undefined
-          ? `Searching for ${searchQuery}`
-          : searchedAndFilteredCountries &&
-            searchedAndFilteredCountries.length === 0
-          ? 'Nothing was found!'
-          : searchedAndFilteredCountries.map((country) => {
-              return (
-                <Card key={country.id}>
-                  <Flag src={country.flag.src} alt='' />
-                  <Information>
-                    <Title>{country.name}</Title>
-                    <Item>
-                      Population: <Value>{country.population}</Value>
-                    </Item>
-                    <Item>
-                      Region: <Value>{country.region}</Value>
-                    </Item>
-                    <Item>
-                      Capital: <Value>{country.capital}</Value>
-                    </Item>
-                  </Information>
-                </Card>
+                </Link>
               );
             })}
       </CountryList>

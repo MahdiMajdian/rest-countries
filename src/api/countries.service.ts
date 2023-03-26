@@ -1,55 +1,5 @@
 import { Country, HTTPService } from '@modules/countries/store';
-
-interface ServerCountry {
-  name: string;
-  topLevelDomain: string[];
-  alpha2Code: string;
-  alpha3Code: string;
-  callingCodes: string[];
-  capital: string;
-  altSpellings: string[];
-  subregion: string;
-  region: string;
-  population: number;
-  latlng: number[];
-  demonym: string;
-  area: number;
-  timezones: string[];
-  borders: string[];
-  nativeName: string;
-  numericCode: string;
-  flags: {
-    svg: string;
-    png: string;
-  };
-  currencies: { code: string; name: string; symbol: string }[];
-  languages: {
-    iso639_1: string;
-    iso639_2: string;
-    name: string;
-    nativeName: string;
-  }[];
-  translations: {
-    br: string;
-    pt: string;
-    nl: string;
-    hr: string;
-    fa: string;
-    de: string;
-    es: string;
-    fr: string;
-    ja: string;
-    it: string;
-    hu: string;
-  };
-  flag: string;
-  regionalBlocs: {
-    acronym: string;
-    name: string;
-  }[];
-  cioc: string;
-  independent: boolean;
-}
+import { CountryDetails, ServerCountry } from '@modules/countries/store/types';
 
 let service: HTTPServiceImpl;
 
@@ -123,6 +73,45 @@ class HTTPServiceImpl implements HTTPService {
     });
 
     return transformedCountries;
+  }
+
+  public async getCountryDetails(countryCode: string) {
+    try {
+      const response = await fetch(`${this.BASE_URL}/v2/alpha/${countryCode}`);
+
+      if (!response.ok) {
+        throw new Error('Connection failed with fetching data');
+      }
+
+      const data: ServerCountry = await response.json();
+
+      if (data === undefined) {
+        throw new Error('received data is corrupted');
+      }
+
+      const countryDetails = this.transformCountry(data);
+
+      return countryDetails;
+    } catch (error) {
+      // TODO: handle error here
+    }
+  }
+
+  private transformCountry(country: ServerCountry): CountryDetails {
+    return {
+      id: country.alpha3Code,
+      name: country.name,
+      nativeName: country.nativeName,
+      population: country.population,
+      region: country.region,
+      subRegion: country.subregion,
+      capital: country.capital,
+      flag: { src: country.flag },
+      currencies: country.currencies.map((currency) => currency.name),
+      topLevelDomain: country.topLevelDomain[0],
+      languages: country.languages.map((language) => language.name),
+      borderCountries: country.borders,
+    };
   }
 }
 

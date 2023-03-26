@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { getCountriesHttpService } from '@api';
 import Countries from '@modules/countries';
+import CountryDetails from '@modules/countries/screens/country-details';
 import { useStore } from '@modules/countries/store';
 import {
   StoreContext as CountriesStoreContext,
@@ -25,6 +26,16 @@ function RoutesComponent(): React.ReactElement {
             <CountriesStoreContext.Provider value={countriesStore}>
               <CountriesServiceContext.Provider value={countriesHttpService}>
                 <Countries />
+              </CountriesServiceContext.Provider>
+            </CountriesStoreContext.Provider>
+          }
+        />
+        <Route
+          path='/country/:countryCode'
+          element={
+            <CountriesStoreContext.Provider value={countriesStore}>
+              <CountriesServiceContext.Provider value={countriesHttpService}>
+                <CountryDetails />
               </CountriesServiceContext.Provider>
             </CountriesStoreContext.Provider>
           }
