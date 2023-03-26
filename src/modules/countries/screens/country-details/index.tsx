@@ -21,6 +21,10 @@ import {
   BorderCountryList,
   BorderCountry,
   CountryName,
+  Information,
+  DetailsWrapper,
+  Statics,
+  BorderCountries,
 } from './styles';
 
 function CountryDetails() {
@@ -58,62 +62,71 @@ function CountryDetails() {
       {countryDetails === undefined ? (
         'loading details'
       ) : (
-        <>
-          <Flag src={countryDetails.flag.src} alt={countryDetails.name} />
-          <Name>{countryDetails.name}</Name>
-          <Group>
-            <Item>
-              Native Name: <Value>{countryDetails.nativeName}</Value>
-            </Item>
-            <Item>
-              Population: <Value>{countryDetails.population}</Value>
-            </Item>
-            <Item>
-              Region: <Value>{countryDetails.region}</Value>
-            </Item>
-            <Item>
-              Sub Region: <Value>{countryDetails.subRegion}</Value>
-            </Item>
-            <Item>
-              Capital: <Value>{countryDetails.capital}</Value>
-            </Item>
-          </Group>
-          <Group>
-            <Item>
-              Top Level Domain: <Value>{countryDetails.topLevelDomain}</Value>
-            </Item>
-            <Item>
-              Currencies: <Value>{countryDetails.currencies.join(', ')}</Value>
-            </Item>
-            <Item>
-              Languages: <Value>{countryDetails.languages.join(', ')}</Value>
-            </Item>
-          </Group>
-          <Group>
-            <GroupTitle>Border Countries:</GroupTitle>
+        <DetailsWrapper>
+          <Flag>
+            <img src={countryDetails.flag.src} alt={countryDetails.name} />
+          </Flag>
+          <Information>
+            <Name>{countryDetails.name}</Name>
+            <Statics>
+              <Group>
+                <Item>
+                  Native Name: <Value>{countryDetails.nativeName}</Value>
+                </Item>
+                <Item>
+                  Population: <Value>{countryDetails.population}</Value>
+                </Item>
+                <Item>
+                  Region: <Value>{countryDetails.region}</Value>
+                </Item>
+                <Item>
+                  Sub Region: <Value>{countryDetails.subRegion}</Value>
+                </Item>
+                <Item>
+                  Capital: <Value>{countryDetails.capital}</Value>
+                </Item>
+              </Group>
+              <Group>
+                <Item>
+                  Top Level Domain:
+                  <Value>{countryDetails.topLevelDomain}</Value>
+                </Item>
+                <Item>
+                  Currencies:
+                  <Value>{countryDetails.currencies.join(', ')}</Value>
+                </Item>
+                <Item>
+                  Languages:
+                  <Value>{countryDetails.languages.join(', ')}</Value>
+                </Item>
+              </Group>
+            </Statics>
+            <BorderCountries>
+              <GroupTitle>Border Countries:</GroupTitle>
 
-            {countryDetails.borderCountries === undefined ? (
-              `${countryDetails.name} has no border with other countries!`
-            ) : (
-              <BorderCountryList>
-                {countryDetails.borderCountries.map((borderCountry) => {
-                  const countryName =
-                    ThreeLetterCountryCodeToFullName(borderCountry);
+              {countryDetails.borderCountries === undefined ? (
+                `${countryDetails.name} has no border with other countries!`
+              ) : (
+                <BorderCountryList>
+                  {countryDetails.borderCountries.map((borderCountry) => {
+                    const countryName =
+                      ThreeLetterCountryCodeToFullName(borderCountry);
 
-                  return (
-                    <BorderCountry key={borderCountry}>
-                      <Link to={`/country/${borderCountry}`}>
-                        <CountryName title={countryName}>
-                          {countryName}
-                        </CountryName>
-                      </Link>
-                    </BorderCountry>
-                  );
-                })}
-              </BorderCountryList>
-            )}
-          </Group>
-        </>
+                    return (
+                      <BorderCountry key={borderCountry}>
+                        <Link to={`/country/${borderCountry}`}>
+                          <CountryName title={countryName}>
+                            {countryName}
+                          </CountryName>
+                        </Link>
+                      </BorderCountry>
+                    );
+                  })}
+                </BorderCountryList>
+              )}
+            </BorderCountries>
+          </Information>
+        </DetailsWrapper>
       )}
     </StyledCountryDetails>
   );

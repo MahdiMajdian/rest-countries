@@ -36,5 +36,9 @@ declare module '@emotion/react' {
       normal: FontWeight;
       bold: FontWeight;
     };
+    breakpoints: {
+      mobile: string;
+      desktop: string;
+    };
   }
 }
