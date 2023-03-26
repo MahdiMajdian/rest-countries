@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchInput Snapshot renders 1`] = `
+<div>
+  <div
+    class="css-cdxmyc"
+  >
+    <div
+      class="css-1nm4ymt"
+    >
+      <svg>
+        magnifier.svg
+      </svg>
+    </div>
+    <input
+      aria-label="search-input"
+      class="css-155pe6x"
+      placeholder="Search for a country..."
+      value=""
+    />
+  </div>
+</div>
+`;
